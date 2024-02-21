@@ -1,4 +1,6 @@
 import java.math.*;
+import java.util.ArrayList;
+
 public class Player {
     String name;
     int Cash;
@@ -6,7 +8,8 @@ public class Player {
     int bahnhofCount;
     boolean inPrison;
     int position;
-    public static Street[] Streets;
+    public static Street[] Streets = new Street[35];
+    public ArrayList<Street> myStreets = new ArrayList<Street>();
 
     public void rollDice(){
         int resultDieOne = (int) (Math.random() * 6) + 1;
@@ -29,5 +32,37 @@ public class Player {
         position += resultDice;
         paschCount = 0; //s.O.
 
+    }
+
+    public void buyProperty(int position) {
+        if (Cash >= Streets[position].price) {
+            Cash -= Streets[position].price;
+            if (myStreets.isEmpty() || Streets[position].type.equals("Werk")) {
+                myStreets.add(Streets[position]);
+            } else if (Streets[position].type.equals("Bahnhof")) {
+                for (int j = 0; j < myStreets.size(); j++){
+                    if (myStreets.get(j).type.equals("Werk")){
+                        myStreets.add(j, Streets[position]);
+                        break;
+                    }
+                    if (j == myStreets.size() - 1) {
+                        myStreets.add(Streets[position]);
+                        break;
+                    }
+                }
+
+            } else {
+                for (int i = 0; i < myStreets.size(); i++){
+                    if (myStreets.get(i).type.equals("Bahnhof") || myStreets.get(i).type.equals("Werk")) {
+                        myStreets.add(i, Streets[position]);
+                        break;
+                    }
+                    if (myStreets.get(i).position < position) {
+                        myStreets.add(i, Streets[position]);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
