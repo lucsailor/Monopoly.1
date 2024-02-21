@@ -1,6 +1,7 @@
 import java.math.*;
 public class Player {
     String name;
+
     int Cash;
     int paschCount;
     int bahnhofCount;
