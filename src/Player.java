@@ -23,7 +23,7 @@ public class Player {
                 position = 9;
                 inPrison = true;
                 paschCount = 0; //Ist das nötig?
-                //Beende die Methode, damit der Spieler nicht voranschreitet
+                //Beende die Methode, damit der Spieler nicht voranschreitet.
                 return;
 
             }
