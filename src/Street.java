@@ -1,6 +1,7 @@
 public class Street {
+    int position;
     String name;
-    int price;
+    public int price;
     int[] rent;
     int[] group;
     int upgrade_cost;
@@ -14,6 +15,7 @@ public class Street {
         this.upgrade_cost = upgrade_cost;
         this.price = price;
         this.type = type;
+        position = i;
         Player.Streets[i] = this;
         i++;
 
