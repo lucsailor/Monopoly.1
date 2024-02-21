@@ -14,4 +14,10 @@ public class Street {
         i++;
 
     }
+
+    public void rollDice(){
+
+
+    }
+
 }
