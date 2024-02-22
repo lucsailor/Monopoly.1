@@ -36,6 +36,7 @@ public class Player {
         if (resultDice == 2){
             cash += 200;
         }
+
         //Nicht vergessen: Der Spieler ist nochmal dran danach
     }
     public void moveForward(){
