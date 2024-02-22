@@ -1,9 +1,9 @@
 import java.math.*;
 import java.util.ArrayList;
+import java.util.Random;
 public class Player {
     String name;
-
-    int Cash;
+    int cash;
     int paschCount;
     int bahnhofCount;
     boolean inPrison;
@@ -11,33 +11,53 @@ public class Player {
     public static Street[] Streets;
     public ArrayList<Street> myStreets = new ArrayList<Street>();
 
+    int resultDice;
+
     public void rollDice(){
-        int resultDieOne = (int) (Math.random() * 6) + 1;
-        int resultDieTwo = (int) (Math.random() * 6) + 1;
-        int resultDice = resultDieOne + resultDieTwo;
+        Random rand = new Random();
+        int resultDieOne = rand.nextInt(6) + 1;
+        int resultDieTwo = rand.nextInt(6) + 1;
+        resultDice = resultDieOne + resultDieTwo;
         if (resultDieOne == resultDieTwo){
-
-            paschCount += 1;
-            if (paschCount == 3){
-                //move to jail
-                position = 9;
-                inPrison = true;
-                paschCount = 0; //Ist das nötig?
-                //Beende die Methode, damit der Spieler nicht voranschreitet.
-                return;
-
-            }
-            //Hier muss noch die Funktion hin, dass der Spieler nochmal würfelt
+            pasch();
         }
-        position += resultDice;
-        paschCount = 0; //s.O.
-
+        else {
+            paschCount = 0;
+        }
+        moveForward();
     }
+    public void pasch(){
+        paschCount += 1;
+        if (paschCount == 3){
+            //move to jail
+            position = 9;
+            inPrison = true;
+            paschCount = 0;
+        }
+        //Snake Eye Bonus
+        if (resultDice == 2){
+            cash += 200;
+        }
+
+        //Nicht vergessen: Der Spieler ist nochmal dran danach
+    }
+    public void moveForward(){
+        if(!inPrison) { //Hier würde ich dann die Entscheidung mit dem Pay Fine und so implementieren
+            position += resultDice;
+            if(position >= 35){
+                position = position % 36;
+                cash += 200;
+            }
+            if(position == 0){
+                cash += 200;
+            }
+
+    }}
 
 
     public void buyProperty(int position) {
-        if (Cash >= Streets[position].price) {
-            Cash -= Streets[position].price;
+        if (cash >= Streets[position].price) {
+            cash -= Streets[position].price;
             if (myStreets.isEmpty() || Streets[position].type.equals("Werk")) {
                 myStreets.add(Streets[position]);
             } else if (Streets[position].type.equals("Bahnhof")) {
@@ -65,5 +85,7 @@ public class Player {
                 }
             }
         }
+        }
     }
-}
+
+
