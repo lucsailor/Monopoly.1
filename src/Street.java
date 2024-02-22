@@ -18,8 +18,9 @@ public class Street {
         position = i;
         Player.Streets[i] = this;
         i++;
-
     }
+
+
 
 
 
