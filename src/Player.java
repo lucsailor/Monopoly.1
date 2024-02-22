@@ -11,6 +11,7 @@ public class Player {
     public static Street[] Streets;
     public ArrayList<Street> myStreets = new ArrayList<Street>();
     int resultDice;
+    int Gefängnisfreikarte;
 
     public void rollDice(){
         Random rand = new Random();
@@ -57,34 +58,43 @@ public class Player {
     public void buyProperty(int position) {
         if (cash >= Streets[position].price) {
             cash -= Streets[position].price;
-            if (myStreets.isEmpty() || Streets[position].type.equals("Werk")) {
-                myStreets.add(Streets[position]);
-            } else if (Streets[position].type.equals("Bahnhof")) {
-                for (int j = 0; j < myStreets.size(); j++){
-                    if (myStreets.get(j).type.equals("Werk")){
-                        myStreets.add(j, Streets[position]);
-                        break;
-                    }
-                    if (j == myStreets.size() - 1) {
-                        myStreets.add(Streets[position]);
-                        break;
-                    }
-                }
+            addStreet(position);
+        }
+    }
 
-            } else {
-                for (int i = 0; i < myStreets.size(); i++){
-                    if (myStreets.get(i).type.equals("Bahnhof") || myStreets.get(i).type.equals("Werk")) {
-                        myStreets.add(i, Streets[position]);
-                        break;
-                    }
-                    if (myStreets.get(i).position < position) {
-                        myStreets.add(i, Streets[position]);
-                        break;
-                    }
+
+    public static void trade(Player player1, int cash1, Street[] streets1, int Gefängnisfreikarte1, Player player2, int cash2, Street[] streets2, int Gefängnisfreikarte2) {
+
+    }
+
+    public void addStreet(int position){
+        if (myStreets.isEmpty() || Streets[position].type.equals("Werk")) {
+            myStreets.add(Streets[position]);
+        } else if (Streets[position].type.equals("Bahnhof")) {
+            for (int j = 0; j < myStreets.size(); j++){
+                if (myStreets.get(j).type.equals("Werk")){
+                    myStreets.add(j, Streets[position]);
+                    break;
+                }
+                if (j == myStreets.size() - 1) {
+                    myStreets.add(Streets[position]);
+                    break;
+                }
+            }
+
+        } else {
+            for (int i = 0; i < myStreets.size(); i++){
+                if (myStreets.get(i).type.equals("Bahnhof") || myStreets.get(i).type.equals("Werk")) {
+                    myStreets.add(i, Streets[position]);
+                    break;
+                }
+                if (myStreets.get(i).position < position) {
+                    myStreets.add(i, Streets[position]);
+                    break;
                 }
             }
         }
-        }
     }
+}
 
 
