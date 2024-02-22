@@ -10,7 +10,6 @@ public class Player {
     int position;
     public static Street[] Streets;
     public ArrayList<Street> myStreets = new ArrayList<Street>();
-
     int resultDice;
 
     public void rollDice(){
