@@ -22,21 +22,20 @@ public class MonopolyGame {
         playerCount = Integer.parseInt(stringPlayerCount);
         players = new Player[playerCount];
         Random rand = new Random();
-        j = rand.nextInt(playerCount);
+        j = rand.nextInt((playerCount-1));
         for (int i = 0; i < playerCount; i++){
             playerName = JOptionPane.showInputDialog("Geben Sie den Namen für Spieler " + (i+1) + " ein:");
             players[i] = new Player(playerName);
             System.out.println(players[i].name);
         }
-        JFrame frame = new JFrame("Mein Button");
-        JButton button = new JButton("Würfeln");
+        JFrame frame = new JFrame(players[j].name);
+        JButton button = new JButton(players[j].name + "Würfeln");
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                player1.rollDice();
-                System.out.println(player1.resultDice);
-                System.out.println(Player.Streets[player1.position].name);
+                players[j].rollDice();
+                System.out.println(players[j].resultDice);
+                System.out.println(Player.Streets[players[j].position].name);
             }
             });
 
