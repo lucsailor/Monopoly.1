@@ -6,7 +6,6 @@ public class Street {
     int[] group;
     int upgrade_cost;
     String type;
-
     boolean buyable;
     Player owner;
     static int i = 0;
