@@ -6,31 +6,61 @@ public class Player {
     int cash;
     int paschCount;
     int bahnhofCount;
+    int werkeCount;
     boolean inPrison;
     int position;
-    public static Street[] Streets;
+    public static Street[] Streets = new Street[40];
     public ArrayList<Street> myStreets = new ArrayList<Street>();
-    int resultDice;
+    public int resultDice;
     int Gefängnisfreikarte;
+
+
+    public Player (String name) {
+        this.name = name;
+        cash = 1500;
+        paschCount = 0;
+        bahnhofCount = 0;
+        werkeCount = 0;
+        inPrison = false;
+        position = 0;
+        Gefängnisfreikarte = 0;
+    }
 
     public void rollDice(){
         Random rand = new Random();
-        int resultDieOne = rand.nextInt(6) + 1;
-        int resultDieTwo = rand.nextInt(6) + 1;
-        resultDice = resultDieOne + resultDieTwo;
-        if (resultDieOne == resultDieTwo){
-            pasch();
+        if (inPrison){
+//            if(pay) // Der Spieler zahlt
+            //else
+            int resultDieOne = rand.nextInt(6) + 1;
+            int resultDieTwo = rand.nextInt(6) + 1;
+            resultDice = resultDieOne + resultDieTwo;
+            if (resultDieOne == resultDieTwo) {
+                pasch();
+                moveForward();
+            } else {
+                paschCount++;
+                if (paschCount == 3) {
+                    cash -= 50;
+                    moveForward();
+                }
+            }
+        } else {
+            int resultDieOne = rand.nextInt(6) + 1;
+            int resultDieTwo = rand.nextInt(6) + 1;
+            resultDice = resultDieOne + resultDieTwo;
+            if (resultDieOne == resultDieTwo) {
+                pasch();
+            } else {
+                paschCount = 0;
+            }
+            moveForward();
         }
-        else {
-            paschCount = 0;
-        }
-        moveForward();
     }
     public void pasch(){
         paschCount += 1;
         if (paschCount == 3){
             //move to jail
-            position = 9;
+            position = 10;
             inPrison = true;
             paschCount = 0;
         }
@@ -42,17 +72,16 @@ public class Player {
         //Nicht vergessen: Der Spieler ist nochmal dran danach
     }
     public void moveForward(){
-        if(!inPrison) { //Hier würde ich dann die Entscheidung mit dem Pay Fine und so implementieren
             position += resultDice;
-            if(position >= 35){
-                position = position % 36;
+            if(position >= 40){
+                position = position % 40;
                 cash += 200;
             }
             if(position == 0){
                 cash += 200;
             }
 
-    }}
+    }
 
 
     public void buyProperty(int position) {
@@ -69,8 +98,10 @@ public class Player {
 
     public void addStreet(int position){
         if (myStreets.isEmpty() || Streets[position].type.equals("Werk")) {
+            werkeCount++;
             myStreets.add(Streets[position]);
         } else if (Streets[position].type.equals("Bahnhof")) {
+            bahnhofCount++;
             for (int j = 0; j < myStreets.size(); j++){
                 if (myStreets.get(j).type.equals("Werk")){
                     myStreets.add(j, Streets[position]);
