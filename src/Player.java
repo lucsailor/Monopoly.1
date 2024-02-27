@@ -52,8 +52,6 @@ public class Player {
             }
 
     }}
-
-
     public void buyProperty(int position) {
         if (cash >= Streets[position].price) {
             cash -= Streets[position].price;
