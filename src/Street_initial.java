@@ -1,6 +1,7 @@
 public class Street_initial {
     public static void main(String[] args){
         int[] a = new int[0];
+
         Player.Streets[0] = new Street("Los", null, 0, 200, "Start", null, false);
         Player.Streets[1] = new Street("Badstraße", new int[]{2, 10, 30, 90, 160, 250}, 50, 60, "Street", new int[]{1, 3}, true);
         Player.Streets[2] = new Street("Gemeinschaftsfeld", null, 0, 0, "Gemeinschaftsfeld", null, false);
