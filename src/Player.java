@@ -27,10 +27,24 @@ public class Player {
     }
 
     public void rollDice(){
+        MonopolyGame.j++;
         Random rand = new Random();
         if (inPrison){
-//            if(pay) // Der Spieler zahlt
-            //else
+            //Button
+            //pay
+            int platzhalter = 0;
+            if (platzhalter == 10 ){
+                cash -= 50;
+                this.inPrison = false;
+                rollDice();
+            }
+            // if Gefängnisfreikarte = 0 → nicht ausführen
+            else if (platzhalter == 20 ){
+                this.Gefängnisfreikarte -= 1;
+                this.inPrison = false;
+                rollDice();
+            }
+            else{
             int resultDieOne = rand.nextInt(6) + 1;
             int resultDieTwo = rand.nextInt(6) + 1;
             resultDice = resultDieOne + resultDieTwo;
@@ -44,6 +58,8 @@ public class Player {
                     moveForward();
                 }
             }
+            }
+
         } else {
             int resultDieOne = rand.nextInt(6) + 1;
             int resultDieTwo = rand.nextInt(6) + 1;
@@ -57,12 +73,14 @@ public class Player {
         }
     }
     public void pasch(){
+        MonopolyGame.j--;
         paschCount += 1;
         if (paschCount == 3){
             //move to jail
             position = 10;
             inPrison = true;
             paschCount = 0;
+            MonopolyGame.j++;
         }
         //Snake Eye Bonus
         if (resultDice == 2){
@@ -125,6 +143,7 @@ public class Player {
                 }
             }
         }
+        Streets[position].owner = this;
     }
 }
 
