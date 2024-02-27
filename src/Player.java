@@ -13,6 +13,7 @@ public class Player {
     public ArrayList<Street> myStreets = new ArrayList<Street>();
     public int resultDice;
     int Gefängnisfreikarte;
+    int platzhalter = 0;
 
 
     public Player (String name) {
@@ -32,7 +33,7 @@ public class Player {
         if (inPrison){
             //Button
             //pay
-            int platzhalter = 0;
+
             if (platzhalter == 10 ){
                 cash -= 50;
                 this.inPrison = false;
@@ -145,6 +146,65 @@ public class Player {
         }
         Streets[position].owner = this;
     }
+    public void action(int position){
+
+        switch(Streets[position].type) {
+            case "Street":
+                //steppedOnStreet();
+                break;
+            case "Start":
+                cash +=200;
+                break;
+            case "Gemeinschaftsfeld":
+                //steppedOnGemeinschaftsfeld();
+                break;
+            case "Bahnhof":
+                //steppedOnBahnhof();
+                break;
+            case "Ereignisfeld":
+                //steppedOnEreignisfeld();
+                break;
+            case "Einkommenssteuer":
+                cash -=200;
+                break;
+            case "Gefängnis":
+                System.out.println("You're only here for a visit");
+                break;
+            case "Werk":
+                //steppedOnWerk();
+                break;
+            case "Frei Parken":
+                //steppedOnWerk();
+                break;
+            case "Ins Gefängnis":
+                //steppedOnWerk();
+                break;
+            case "Zusatzsteuer":
+                cash -=100;
+                break;
+            default:
+
+
+                }
+            }
+
+
+    public void steppedOnStreet(int position){
+        if (Streets[position].owner == null){
+            if (cash >= Streets[position].price){
+            //kaufen button
+            if (platzhalter == 1){
+                cash -= Streets[position].price;
+                addStreet(this.position);
+            }
+            }
+
+
+
+        }
+    }
+
+
 }
 
 

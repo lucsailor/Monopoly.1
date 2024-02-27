@@ -7,7 +7,7 @@ public class Street {
     int upgrade_cost;
     String type;
     boolean buyable;
-    Player owner;
+    public Player owner;
     static int i = 0;
 
     public Street (String name, int[] rent, int upgrade_cost, int price, String type, int[] group, boolean buyable){
