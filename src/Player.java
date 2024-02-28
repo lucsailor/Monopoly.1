@@ -96,9 +96,7 @@ public class Player {
                 position = position % 40;
                 cash += 200;
             }
-            if(position == 0){
-                cash += 200;
-            }
+
 
     }
 
