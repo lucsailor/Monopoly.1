@@ -14,7 +14,7 @@ public class Player {
     public int resultDice;
     int Gefängnisfreikarte;
     int platzhalter = 0;
-
+    Random rand = new Random();
 
     public Player (String name) {
         this.name = name;
@@ -29,7 +29,7 @@ public class Player {
 
     public void rollDice(){
         MonopolyGame.j++;
-        Random rand = new Random();
+
         if (inPrison){
             //Button
             //pay
@@ -150,19 +150,19 @@ public class Player {
 
         switch(Streets[position].type) {
             case "Street":
-                //steppedOnStreet();
+                steppedOnStreet(position);
                 break;
             case "Start":
                 cash +=200;
                 break;
             case "Gemeinschaftsfeld":
-                //steppedOnGemeinschaftsfeld();
+                steppedOnGemeinschaftsfeld();
                 break;
             case "Bahnhof":
-                //steppedOnBahnhof();
+                steppedOnBahnhof();
                 break;
             case "Ereignisfeld":
-                //steppedOnEreignisfeld();
+                steppedOnEreignisfeld();
                 break;
             case "Einkommenssteuer":
                 cash -=200;
@@ -171,13 +171,16 @@ public class Player {
                 System.out.println("You're only here for a visit");
                 break;
             case "Werk":
-                //steppedOnWerk();
+                steppedOnWerk();
                 break;
             case "Frei Parken":
-                //steppedOnWerk();
+                //cash += jackpot;
+                System.out.println("You've won the jackpot!");
                 break;
             case "Ins Gefängnis":
-                //steppedOnWerk();
+                this.position = 10;
+                this.inPrison = true;
+                System.out.println("You're going to jail");
                 break;
             case "Zusatzsteuer":
                 cash -=100;
@@ -189,22 +192,64 @@ public class Player {
             }
 
 
-    public void steppedOnStreet(int position){
-        if (Streets[position].owner == null){
-            if (cash >= Streets[position].price){
-            //kaufen button
-            if (platzhalter == 1){
-                cash -= Streets[position].price;
-                addStreet(this.position);
+    public void steppedOnStreet(int position) {
+        if (Streets[position].owner == null) {
+            if (cash >= Streets[position].price) {
+                //kaufen button
+                if (platzhalter == 1) {
+                    cash -= Streets[position].price;
+                    addStreet(this.position);
+                }
             }
-            }
-
-
-
+        }
+        if (!Streets[position].owner.equals(name)){
+            cash -= Streets[position].rent[platzhalter];
+            //hier muss noch das übertragen an den Owner hin
+        }
+        //finish turn knopf
+        if (platzhalter == 2){
+            //j++ ? Hier müssen wir mal gucken, wie wirs machen
         }
     }
+    public void steppedOnGemeinschaftsfeld(){
+        int karte = rand.nextInt(50);
+        //implementierung Gemeinschaftsfeld
+    }
+    public void steppedOnBahnhof(){
+        if (Streets[position].owner == null) {
+            if (cash >= Streets[position].price) {
+                //kaufen button
+                if (platzhalter == 1) {
+                    cash -= Streets[position].price;
+                    addStreet(this.position);
+                }
+            }
+        }
+        if (!Streets[position].owner.equals(name)){
+            cash -= Streets[position].rent[platzhalter];
+            //hier muss noch das übertragen des Geldes an den Owner hin
+        }
 
-
+    }
+    public void steppedOnEreignisfeld(){
+        int karte = rand.nextInt(50);
+        //implementierung Ereignisfeld
+    }
+    public void steppedOnWerk(){
+        if (Streets[position].owner == null) {
+            if (cash >= Streets[position].price) {
+                //kaufen button
+                if (platzhalter == 1) {
+                    cash -= Streets[position].price;
+                    addStreet(this.position);
+                }
+            }
+        }
+        if (!Streets[position].owner.equals(name)){
+            cash -= (Streets[position].rent[platzhalter]) * resultDice;
+            //hier muss noch das übertragen des Geldes an den Owner hin
+        }
+}
 }
 
 
